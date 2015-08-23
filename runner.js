@@ -96,4 +96,5 @@ function runTestCase(problem, testFile, input, output, cb) {
 		return cb(null, stdout, stderr);
 	});
 	child.stdin.write(input);
+	child.stdin.end();
 }
