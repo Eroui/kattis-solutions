@@ -26,10 +26,12 @@ catch(e) {
 
 descriptions.forEach(function(description) {
 	problems.push(compileProblem.bind(null, description));
-	problems.push(runProblem.bind(null, description))
+	problems.push(runProblem.bind(null, description));
 });
 
-async.series(problems);
+async.series(problems, function(err) {
+	process.exit(err ? 1 : 0);
+});
 
 function compileProblem(problem, cb) {
 	var cmd = 'cc -g -O2 -std=gnu99 -static -lm problems/' + problem.id + '/solution.c -o build/' + problem.id + '.bin';
