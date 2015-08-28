@@ -29,5 +29,14 @@
 			"reversebinary.1.in": "reversebinary.1.ans",
 			"reversebinary.2.in": "reversebinary.2.ans"
 		}
+	},
+	{
+		"id": "rijeci",
+		"name": "Riječi",
+		"testCases": {
+			"rijeci.1.in": "rijeci.1.ans",
+			"rijeci.2.in": "rijeci.2.ans",
+			"rijeci.3.in": "rijeci.3.ans"
+		}
 	}
 ]
