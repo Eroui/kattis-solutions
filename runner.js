@@ -4,6 +4,13 @@ var fs = require('fs');
 var descriptions = require('./problems.json');
 
 var DEBUG = false;
+
+var PARAM_STDOUT = 0;
+var PARAM_STDERR = 1;
+
+var tasks = [];
+var problems = [];
+
 if (DEBUG) {
 	exec = function(cmd, cb) {
 		console.log(cmd);
@@ -11,36 +18,60 @@ if (DEBUG) {
 	}
 }
 
-var PARAM_STDOUT = 0;
-var PARAM_STDERR = 1;
-
-var problems = [];
-
-try {
-	fs.lstatSync('build/');
-}
-catch(e) {
-	process.stderr.write('Build directory missing; creating');
-	fs.mkdirSync('build/');
-}
-
-descriptions.forEach(function(description) {
-	problems.push(compileProblem.bind(null, description));
-	problems.push(runProblem.bind(null, description));
+// create build directory if it does not exist
+tasks.push(function(callback) {
+	fs.stat('build/', function(err, stat) {
+		if (err) {
+			writeError('Build directory missing; creating\n');
+			fs.mkdir('build/', callback);
+			return;
+		}
+		return callback();
+	});
 });
 
-async.series(problems, function(err) {
+tasks.push(function(callback) {
+	var i;
+	var id;
+
+	for (i = 0; i < descriptions.length; i++) {
+		var description;
+		id = descriptions[i];
+		try {
+			description = require('./problems/' + id + '/description.json');
+		}
+		catch (e) {
+			return callback(new Error('Problem, with id ' + id + ', does not have required "description.json" file'));
+		}
+
+		problems.push(compileProblem.bind(null, description));
+		problems.push(runProblem.bind(null, description));
+	}
+
+	async.series(problems, function(err) {
+		callback(err);
+	});
+});
+
+async.series(tasks, function(err) {
+	if (err) {
+		console.log(err.message);
+	}
 	process.exit(err ? 1 : 0);
 });
+
+function writeError() {
+	process.stderr.write.apply(process.stderr, arguments);
+}
 
 function compileProblem(problem, cb) {
 	var cmd = 'cc -g -O2 -std=gnu99 -static -lm problems/' + problem.id + '/solution.c -o build/' + problem.id + '.bin';
 	exec(cmd, function(err, stdout, stderr) {
 		if (stderr) {
-			process.stderr.write(stderr);
+			writeError(stderr);
 		}
 		if (stdout) {
-			process.stdout.write(stdout);
+			writeError(stdout);
 		}
 		cb(err, stdout, stderr);
 	});
@@ -64,33 +95,33 @@ function runTestCase(problem, testFile, input, output, cb) {
 	var cmd = './build/' + problem.id + '.bin';
 	var child = exec(cmd, function(err, stdout, stderr) {
 		if (stderr) {
-			process.stderr.write(stderr);
+			writeError(stderr);
 		}
 
 		process.stdout.write(problem.name + ' (' + testFile + '): ')
 
 		if (err) {
 			process.stdout.write('(fail)');
-			process.stderr.write(err.message);
+			writeError(err.message);
 			return cb(err, stdout, stderr);
 		}
 
 		if (stdout !== output) {
 			process.stdout.write('(fail)\n');
-			process.stderr.write('                  Expected\n');
-			process.stderr.write('--------------------------\n');
-			process.stderr.write(output);
+			writeError('                  Expected\n');
+			writeError('--------------------------\n');
+			writeError(output);
 			if (stdout[stdout.length -1]) {
-				process.stderr.write('\n');
+				writeError('\n');
 			}
-			process.stderr.write('--------------------------\n\n');
-			process.stderr.write('                    Actual\n');
-			process.stderr.write('--------------------------\n');
-			process.stderr.write(stdout);
+			writeError('--------------------------\n\n');
+			writeError('                    Actual\n');
+			writeError('--------------------------\n');
+			writeError(stdout);
 			if (stdout[stdout.length -1]) {
-				process.stderr.write('\n');
+				writeError('\n');
 			}
-			process.stderr.write('--------------------------\n');
+			writeError('--------------------------\n');
 			return cb(new Error('No match'), stdout, stderr);
 		}
 		
