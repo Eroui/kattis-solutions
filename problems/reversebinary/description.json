@@ -1,0 +1,8 @@
+{
+	"id": "reversebinary",
+	"name": "Reversed Binary Numbers",
+	"testCases": {
+		"reversebinary.1.in": "reversebinary.1.ans",
+		"reversebinary.2.in": "reversebinary.2.ans"
+	}
+}

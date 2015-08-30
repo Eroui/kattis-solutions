@@ -1,0 +1,7 @@
+{
+	"id": "hello",
+	"name": "Hello World!",
+	"testCases": {
+		"hello.in": "hello.out"
+	}
+}
