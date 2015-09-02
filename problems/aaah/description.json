@@ -1,0 +1,8 @@
+{
+	"id": "aaah",
+	"name": "Aaah!",
+	"testCases": {
+		"aaah.1.in": "aaah.1.ans",
+		"aaah.2.in": "aaah.2.ans"
+	}
+}
