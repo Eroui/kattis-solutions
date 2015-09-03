@@ -1,0 +1,7 @@
+{
+	"id": "easiest",
+	"name": "The Easiest Problem Is This One",
+	"testCases": {
+		"easiest.in": "easiest.out"
+	}
+}
