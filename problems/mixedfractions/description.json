@@ -1,0 +1,7 @@
+{
+	"id": "mixedfractions",
+	"name": "Mixed Fractions",
+	"testCases": {
+		"mixedfractions.in": "mixedfractions.out"
+	}
+}
