@@ -1,5 +1,6 @@
 var fs = require('fs');
 var async = require('async');
+var touch = require('touch');
 var validator = require('validator');
 var promptly = require('promptly');
 var jsonfile = require('jsonfile');
@@ -22,7 +23,7 @@ async.waterfall(tasks, function(err, v) {
 		console.error('An error occured: ' + err.message);
 		return;
 	}
-	console.log('Problem description file created');
+	console.log('Problem files created');
 });
 
 function validatorString(value) {
@@ -48,14 +49,14 @@ function promptStart(callback, values) {
 		id: null,
 		name: null,
 		caseName: null,
-		numCases: null
+		numCases: 1
 	});
 }
 
 function promptId(values, callback) {
 	promptly.prompt('Problem id:', {
 		validator: validatorString,
-		value: values.id
+		default: values.id
 	}, function(err, value) {
 		if (err) {
 			console.error('Invalid id: ' + err.message);
@@ -67,9 +68,11 @@ function promptId(values, callback) {
 }
 
 function promptName(values, callback) {
-	promptly.prompt('Problem name:', {
+	var defaultValue = values.name || values.id;
+
+	promptly.prompt('Problem name (' + defaultValue + '):', {
 		validator: validatorString,
-		value: values.name
+		default: defaultValue
 	}, function(err, value) {
 		if (err) {
 			console.error('Invalid name: ' + err.message);
@@ -81,9 +84,11 @@ function promptName(values, callback) {
 }
 
 function promptCaseName(values, callback) {
-	promptly.prompt('Test case base: ', {
+	var defaultValue = values.caseName || values.id;
+
+	promptly.prompt('Test case base (' + defaultValue + '): ', {
 		validator: validatorString,
-		value: values.caseName
+		default: defaultValue
 	}, function(err, value) {
 		if (err) {
 			console.error('Invalid base case:' + err.message);
@@ -95,9 +100,9 @@ function promptCaseName(values, callback) {
 }
 
 function promptNumCases(values, callback) {
-	promptly.prompt('# of test cases: ', {
+	promptly.prompt('# of test cases (' + values.numCases + '): ', {
 		validator: validatorNumber,
-		value: values.numCases
+		default: values.numCases
 	}, function(err, value) {
 		if (err) {
 			console.error('Invalid # of cases:' + err.message);
@@ -127,10 +132,10 @@ function promptConfirm(values, callback) {
 			description.testCases[name + '.in'] = name + '.out';
 		}
 	}
-
+	console.log("Description File")
 	console.log(JSON.stringify(description, null, '\t'));
 
-	promptly.confirm('Write File? ', function(err, value) {
+	promptly.confirm('Create Files? [Y/n] ', function(err, value) {
 		if (value) {
 			return callback(err, description);
 		}
@@ -153,6 +158,21 @@ function createProblemDirectory(description, callback) {
 }
 
 function writeFile(description, callback) {
-	var filename = 'problems/' + description.id + '/description.json';
-	jsonfile.writeFile(filename, description, callback);
+	var names = Object.keys(description.testCases);
+	var dir = 'problems/' + description.id + '/';
+	var fileTasks = [];
+
+	fileTasks.push(jsonfile.writeFile.bind(jsonfile, dir + 'description.json', description));
+	fileTasks.push(touch.bind(touch, dir + 'solution.c', {}));
+
+	for (i = 0; i < names.length; i++) {
+		fileTasks.push(
+			touch.bind(touch, dir + names[i],{})
+		);
+		fileTasks.push(
+			touch.bind(touch, dir + description.testCases[names[i]],{})
+		);
+	}
+
+	async.parallel(fileTasks, callback);
 }
