@@ -1,22 +1,13 @@
 var async = require('async');
 var exec = require('child_process').exec;
 var fs = require('fs');
-var descriptions = require('./problems.json');
-
-var DEBUG = false;
 
 var PARAM_STDOUT = 0;
 var PARAM_STDERR = 1;
 
 var tasks = [];
-var problems = [];
 
-if (DEBUG) {
-	exec = function(cmd, cb) {
-		console.log(cmd);
-		cb(null, '', '');
-	}
-}
+
 
 // create build directory if it does not exist
 tasks.push(function(callback) {
@@ -30,28 +21,43 @@ tasks.push(function(callback) {
 	});
 });
 
-tasks.push(function(callback) {
-	var i;
-	var id;
-
-	for (i = 0; i < descriptions.length; i++) {
-		var description;
-		id = descriptions[i];
-		try {
-			description = require('./problems/' + id + '/description.json');
-		}
-		catch (e) {
-			return callback(new Error('Problem, with id ' + id + ', does not have required "description.json" file'));
-		}
-
-		problems.push(compileProblem.bind(null, description));
-		problems.push(runProblem.bind(null, description));
-	}
-
-	async.series(problems, function(err) {
-		callback(err);
+// load only one problem
+if (process.argv.length > 2) {
+	tasks.push(function(callback) {
+		var problems = [];
+		addProblem(problems, process.argv[2], function(err) {
+			if (err) {
+				return callback(err);
+			}
+			async.series(problems, callback);
+		});
 	});
-});
+}
+else {
+	// load problems from directory
+	tasks.push(function(callback) {
+		fs.readdir('problems/', function(err, files) {
+			var i;
+			var id;
+			var folders = [];
+			var problems = [];
+			if (err) {
+				return callback(err);
+			}
+
+			for (i = 0; i < files.length; i++) {
+				folders.push(addProblem.bind(null, problems, files[i]));
+			}
+
+			async.series(folders, function(err) {
+				if (err) {
+					return callback(err);
+				}
+				async.series(problems, callback);
+			});
+		});
+	});
+}
 
 async.series(tasks, function(err) {
 	if (err) {
@@ -59,6 +65,28 @@ async.series(tasks, function(err) {
 	}
 	process.exit(err ? 1 : 0);
 });
+
+function addProblem(problems, id, callback) {
+	fs.stat('problems/' + id, function(err, stat) {
+		var description;
+		if (err) {
+			return callback(new Error('Problem, with id ' + id + ', does not exist'));
+		}
+
+		if (stat.isDirectory()) {
+			try {
+				description = require('./problems/' + id + '/description.json');
+			}
+			catch (e) {
+				console.error('Problem, with id ' + id + ', does not have required "description.json" file');
+				return callback();
+			}
+			problems.push(compileProblem.bind(null, description));
+			problems.push(runProblem.bind(null, description));
+			return callback(null)
+		}
+	});
+}
 
 function writeError() {
 	process.stderr.write.apply(process.stderr, arguments);
