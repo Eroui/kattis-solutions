@@ -1,0 +1,10 @@
+{
+	"id": "trainpassengers",
+	"name": "Train Passengers",
+	"testCases": {
+		"trainpassengers.0.in": "trainpassengers.0.out",
+		"trainpassengers.1.in": "trainpassengers.1.out",
+		"trainpassengers.2.in": "trainpassengers.2.out",
+		"trainpassengers.3.in": "trainpassengers.3.out"
+	}
+}
