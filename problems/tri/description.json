@@ -1,0 +1,8 @@
+{
+	"id": "tri",
+	"name": "Tri",
+	"testCases": {
+		"tri.0.in": "tri.0.out",
+		"tri.1.in": "tri.1.out"
+	}
+}
