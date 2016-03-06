@@ -4,5 +4,8 @@
 	"testCases": {
 		"peragrams.0.in": "peragrams.0.out",
 		"peragrams.1.in": "peragrams.1.out"
-	}
+	},
+	"languages": [
+		"c"
+	]
 }

@@ -3,5 +3,8 @@
 	"name": "Mixed Fractions",
 	"testCases": {
 		"mixedfractions.in": "mixedfractions.out"
-	}
+	},
+	"languages": [
+		"c"
+	]
 }

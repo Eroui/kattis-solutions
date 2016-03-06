@@ -3,5 +3,9 @@
 	"name": "Hello World!",
 	"testCases": {
 		"hello.in": "hello.out"
-	}
+	},
+	"languages": [
+		"c",
+		"python"
+	]
 }

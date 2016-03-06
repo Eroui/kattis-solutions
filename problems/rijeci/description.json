@@ -5,5 +5,8 @@
 		"rijeci.1.in": "rijeci.1.ans",
 		"rijeci.2.in": "rijeci.2.ans",
 		"rijeci.3.in": "rijeci.3.ans"
-	}
+	},
+	"languages": [
+		"c"
+	]
 }

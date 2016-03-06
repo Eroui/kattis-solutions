@@ -4,5 +4,8 @@
 	"testCases": {
 		"pet.1.in": "pet.1.ans",
 		"pet.2.in": "pet.2.ans"
-	}
+	},
+	"languages": [
+		"c"
+	]
 }
