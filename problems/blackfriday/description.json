@@ -4,5 +4,8 @@
 	"testCases": {
 		"blackfriday.0.in": "blackfriday.0.out",
 		"blackfriday.1.in": "blackfriday.1.out"
-	}
+	},
+	"languages": [
+		"c"
+	]
 }

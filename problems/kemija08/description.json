@@ -4,5 +4,8 @@
 	"testCases": {
 		"kemija.1.in": "kemija.1.ans",
 		"kemija.2.in": "kemija.2.ans"
-	}
+	},
+	"languages": [
+		"c"
+	]
 }

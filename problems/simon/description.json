@@ -3,5 +3,8 @@
 	"name": "Simon Says",
 	"testCases": {
 		"simon.in": "simon.out"
-	}
+	},
+	"languages": [
+		"c"
+	]
 }

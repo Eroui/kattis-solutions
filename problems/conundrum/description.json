@@ -3,5 +3,8 @@
 	"name": "Cryptographer's Conundrum",
 	"testCases": {
 		"conundrum.in": "conundrum.out"
-	}
+	},
+	"languages": [
+		"c"
+	]
 }
