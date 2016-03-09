@@ -177,13 +177,13 @@ function runTestCase(cmd, testFile, input, output, cb) {
 			diff = JsDiff.diffLines(output, stdout);
 			diff.forEach(function diffPartEach(part){
 				if (part.added) {
-					writeError(chalk.blue('> ' + part.value));
+					writeError(chalk.blue(prefixDiff('> ', part.value)));
 				}
 				else if (part.removed) {
-					writeError(chalk.red('< ' + part.value));
+					writeError(chalk.red(prefixDiff('< ', part.value)));
 				}
 				else {
-					writeError(chalk.grey('  ' + part.value));
+					writeError(chalk.grey(prefixDiff('  ', part.value)));
 				}
 			});
 
@@ -225,4 +225,22 @@ function verifyProblemDescription(id, description) {
 		return false;
 	}
 	return true;
+}
+
+function prefixDiff(prefix, lines) {
+	var i;
+	var prefixedLines = [];
+	var output = '';
+	var splitLines = lines.split('\n');
+
+	if (splitLines.length === 1) {
+		return lines;
+	}
+
+	for (i = 0; i < splitLines.length - 1; i++) {
+		output += prefix + splitLines[i] + '\n';
+		prefixedLines.push(prefix + splitLines[i]);
+	}
+
+	return output;
 }
