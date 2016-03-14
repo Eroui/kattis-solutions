@@ -1,0 +1,12 @@
+{
+	"id": "lineup",
+	"name": "Line Them Up",
+	"testCases": {
+		"lineup.0.in": "lineup.0.out",
+		"lineup.1.in": "lineup.1.out",
+		"lineup.2.in": "lineup.2.out"
+	},
+	"languages": [
+		"javascript"
+	]
+}
