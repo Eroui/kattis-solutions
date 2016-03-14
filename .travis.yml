@@ -2,7 +2,3 @@ sudo: false
 language: node_js
 node_js:
   - "4"
-addons:
-  apt:
-    packages:
-      - libmozjs185-1.0
