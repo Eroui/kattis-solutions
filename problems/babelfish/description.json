@@ -1,0 +1,10 @@
+{
+	"id": "babelfish",
+	"name": "Babelfish",
+	"testCases": {
+		"babelfish.in": "babelfish.out"
+	},
+	"languages": [
+		"javascript"
+	]
+}
