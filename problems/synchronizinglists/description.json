@@ -1,0 +1,10 @@
+{
+	"id": "synchronizinglists",
+	"name": "Synchronizing lists",
+	"testCases": {
+		"synchronizinglists.1.in": "synchronizinglists.1.out"
+	},
+	"languages": [
+		"javascript"
+	]
+}
