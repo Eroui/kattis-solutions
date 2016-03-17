@@ -1,0 +1,11 @@
+{
+	"id": "ladder",
+	"name": "Ladder",
+	"testCases": {
+		"ladder.0.in": "ladder.0.out",
+		"ladder.1.in": "ladder.1.out"
+	},
+	"languages": [
+		"c"
+	]
+}
