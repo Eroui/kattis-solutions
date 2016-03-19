@@ -10,15 +10,15 @@ var rl = readline.createInterface({
 	terminal: false
 });
 
-rl.on('line', function(line){
+rl.on('line', function online(line){
 	lines.push(line);
 });
 
-rl.on('close', function(){
+rl.on('close', function onclose(){
 	require('./problems/' + process.env.PROBLEM_ID + '/javascript/solution.js');
 });
 
-global.readline = function readline() {
+global.readline = function readlineGlobal() {
 	if (pointer >= lines.length) {
 		return null;
 	}
