@@ -2,7 +2,6 @@
 
 var _ = require('lodash');
 var async = require('async');
-var JsDiff = require('diff');
 var exec = require('child_process').exec;
 var fs = require('fs');
 var chalk = require('chalk');
@@ -13,6 +12,11 @@ var languageModules = {
 	c: require('./languages/c'),
 	python: require('./languages/python'),
 	javascript: require('./languages/javascript')
+};
+
+var diffModules = {
+	line: require('./diff/line'),
+	float: require('./diff/float')
 };
 
 // create build directory if it does not exist
@@ -99,9 +103,21 @@ function addProblem(problems, id, callback) {
 				return callback(e);
 			}
 
-			problem.languages.forEach(function pushLanguage(language) {
-				problems.push(testProblemForLanguage.bind(null, language, problem));
-			});
+			// if missing diff we assume line diff
+			if (!problem.diff) {
+				problem.diff = {
+					type: 'line'
+				};
+			}
+
+			if (problem.skip) {
+				process.stderr.write(chalk.blue('Skipping: ' + problem.id) + '\n');
+			}
+			else {
+				problem.languages.forEach(function pushLanguage(language) {
+					problems.push(testProblemForLanguage.bind(null, language, problem));
+				});
+			}
 		}
 		return callback(null);
 	});
@@ -139,6 +155,7 @@ function compileProblem(cmd, cb) {
 
 function runProblemForLanguage(problem, cmd, cb) {
 	var cases = [];
+	var diff = diffModules[problem.diff.type].bind(null, problem.diff);
 
 	Object.keys(problem.testCases).forEach(function testCasesEach(testFile) {
 		var inputFile = fs.readFileSync('problems/' + problem.id + '/' + testFile, {
@@ -148,14 +165,14 @@ function runProblemForLanguage(problem, cmd, cb) {
 			encoding: 'utf8'
 		});
 
-		cases.push(runTestCase.bind(null, cmd, testFile, inputFile, ouputFile));
+		cases.push(runTestCase.bind(null, cmd, diff, testFile, inputFile, ouputFile));
 	});
 	async.series(cases, cb);
 }
 
-function runTestCase(cmd, testFile, input, output, cb) {
+function runTestCase(cmd, diff, testFile, input, output, cb) {
 	var child = exec(cmd, function runTestCaseCallback(err, stdout, stderr) {
-		var diff;
+		var match;
 
 		if (stderr) {
 			writeError(stderr);
@@ -169,13 +186,18 @@ function runTestCase(cmd, testFile, input, output, cb) {
 			return cb(err, stdout, stderr);
 		}
 
+		match = diff(output, stdout);
 
-		if (stdout !== output) {
+		if (!match.match) {
 			process.stdout.write(chalk.red('(fail)\n'));
 
 			writeError('Diff (' + chalk.red(testFile) + ', ' + chalk.blue('stdout') + '):\n');
-			diff = JsDiff.diffLines(output, stdout);
-			diff.forEach(function diffPartEach(part){
+			
+			if (match.message) {
+				writeError(chalk.yellow(match.message) + '\n');
+			}
+
+			match.parts.forEach(function diffPartEach(part){
 				if (part.added) {
 					writeError(chalk.blue(prefixDiff('> ', part.value)));
 				}
