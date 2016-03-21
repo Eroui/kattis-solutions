@@ -1,0 +1,11 @@
+{
+	"id": "acm",
+	"name": "ACM Contest Scoring",
+	"testCases": {
+		"acm.0.in": "acm.0.out",
+		"acm.1.in": "acm.1.out"
+	},
+	"languages": [
+		"javascript"
+	]
+}
