@@ -1,0 +1,12 @@
+{
+	"id": "modulo",
+	"name": "Modulo",
+	"testCases": {
+		"modulo.0.in": "modulo.0.out",
+		"modulo.1.in": "modulo.1.out",
+		"modulo.2.in": "modulo.2.out"
+	},
+	"languages": [
+		"c"
+	]
+}
