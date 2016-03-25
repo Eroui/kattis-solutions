@@ -1,0 +1,10 @@
+{
+	"id": "weakvertices",
+	"name": "Weak Vertices",
+	"testCases": {
+		"weakvertices.in": "weakvertices.out"
+	},
+	"languages": [
+		"javascript"
+	]
+}
