@@ -1,0 +1,10 @@
+{
+	"id": "detaileddifferences",
+	"name": "Detailed differences",
+	"testCases": {
+		"detaileddifferences.in": "detaileddifferences.out"
+	},
+	"languages": [
+		"javascript"
+	]
+}
