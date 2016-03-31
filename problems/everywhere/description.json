@@ -1,0 +1,10 @@
+{
+	"id": "everywhere",
+	"name": "I've Been Everywhere, Man",
+	"testCases": {
+		"everywhere.in": "everywhere.out"
+	},
+	"languages": [
+		"javascript"
+	]
+}
