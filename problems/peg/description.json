@@ -1,0 +1,11 @@
+{
+	"id": "peg",
+	"name": "Peg",
+	"testCases": {
+		"peg.1.in": "peg.1.out",
+		"peg.0.in": "peg.0.out"
+	},
+	"languages": [
+		"c"
+	]
+}
