@@ -1,0 +1,11 @@
+{
+	"id": "8queens",
+	"name": "Eight Queens",
+	"testCases": {
+		"8queens.1.in": "8queens.1.out",
+		"8queens.0.in": "8queens.0.out"
+	},
+	"languages": [
+		"javascript"
+	]
+}
