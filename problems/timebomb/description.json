@@ -1,0 +1,13 @@
+{
+	"id": "timebomb",
+	"name": "Timebomb",
+	"testCases": {
+		"timebomb.0.in": "timebomb.0.out",
+		"timebomb.1.in": "timebomb.1.out",
+		"timebomb.2.in": "timebomb.2.out",
+		"timebomb.3.in": "timebomb.3.out"
+	},
+	"languages": [
+		"javascript"
+	]
+}
