@@ -1,0 +1,10 @@
+{
+	"id": "reverserot",
+	"name": "Reverse Rot",
+	"testCases": {
+		"reverserot.in": "reverserot.out"
+	},
+	"languages": [
+		"javascript"
+	]
+}
