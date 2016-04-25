@@ -1,0 +1,10 @@
+{
+	"id": "cd",
+	"name": "CD",
+	"testCases": {
+		"cd.in": "cd.out"
+	},
+	"languages": [
+		"javascript"
+	]
+}
