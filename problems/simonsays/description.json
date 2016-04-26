@@ -1,0 +1,12 @@
+{
+	"id": "simonsays",
+	"name": "Simon Says",
+	"testCases": {
+		"simon.0.in": "simon.0.out",
+		"simon.1.in": "simon.1.out",
+		"simon.2.in": "simon.2.out"
+	},
+	"languages": [
+		"c"
+	]
+}
