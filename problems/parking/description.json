@@ -1,0 +1,11 @@
+{
+	"id": "parking",
+	"name": "Parking",
+	"testCases": {
+		"parking.0.in": "parking.0.out",
+		"parking.1.in": "parking.1.out"
+	},
+	"languages": [
+		"c"
+	]
+}
