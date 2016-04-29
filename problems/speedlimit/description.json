@@ -1,0 +1,10 @@
+{
+	"id": "speedlimit",
+	"name": "Speed Limit",
+	"testCases": {
+		"speedlimit.in": "speedlimit.out"
+	},
+	"languages": [
+		"c"
+	]
+}
