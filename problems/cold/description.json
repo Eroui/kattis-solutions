@@ -1,0 +1,11 @@
+{
+	"id": "cold",
+	"name": "Cold-puter Science",
+	"testCases": {
+		"cold.0.in": "cold.0.out",
+		"cold.1.in": "cold.1.out"
+	},
+	"languages": [
+		"c"
+	]
+}
