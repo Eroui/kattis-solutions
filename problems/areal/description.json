@@ -1,0 +1,14 @@
+{
+	"id": "areal",
+	"name": "A Real Challenge",
+	"diff": {
+		"type": "float"
+	},
+	"testCases": {
+		"areal.0.in": "areal.0.out",
+		"areal.1.in": "areal.1.out"
+	},
+	"languages": [
+		"c"
+	]
+}
