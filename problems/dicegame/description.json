@@ -1,0 +1,12 @@
+{
+	"id": "dicegame",
+	"name": "Dice Game",
+	"testCases": {
+		"dicegame.0.in": "dicegame.0.out",
+		"dicegame.1.in": "dicegame.1.out",
+		"dicegame.2.in": "dicegame.2.out"
+	},
+	"languages": [
+		"c"
+	]
+}
