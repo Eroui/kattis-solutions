@@ -1,0 +1,12 @@
+{
+	"id": "volim",
+	"name": "Volim",
+	"testCases": {
+		"volim.0.in": "volim.0.out",
+		"volim.1.in": "volim.1.out",
+		"volim.2.in": "volim.2.out"
+	},
+	"languages": [
+		"c"
+	]
+}
