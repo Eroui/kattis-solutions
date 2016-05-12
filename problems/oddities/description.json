@@ -1,0 +1,10 @@
+{
+	"id": "oddities",
+	"name": "Oddities",
+	"testCases": {
+		"oddities.in": "oddities.out"
+	},
+	"languages": [
+		"c"
+	]
+}
