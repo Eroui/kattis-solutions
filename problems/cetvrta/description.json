@@ -1,0 +1,11 @@
+{
+	"id": "cetvrta",
+	"name": "Cetvrta",
+	"testCases": {
+		"cetvrta.0.in": "cetvrta.0.out",
+		"cetvrta.1.in": "cetvrta.1.out"
+	},
+	"languages": [
+		"c"
+	]
+}
